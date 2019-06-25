@@ -41,7 +41,7 @@ const uint32_t LOG_INTERVAL_USEC = 2000;
 // Pin definitions.
 //
 // SD chip select pin.
-const uint8_t SD_CS_PIN = SS;
+const uint8_t SD_CS_PIN = 33;
 //
 // Digital pin to indicate an error, set to -1 if not used.
 // The led blinks for fatal errors. The led goes on solid for
@@ -562,7 +562,7 @@ void setup(void) {
   if (ERROR_LED_PIN >= 0) {
     pinMode(ERROR_LED_PIN, OUTPUT);
   }
-  Serial.begin(9600);
+  Serial.begin(115200);
 
   // Wait for USB Serial
   while (!Serial) {
@@ -584,7 +584,7 @@ void setup(void) {
 
   // Initialize at the highest speed supported by the board that is
   // not over 50 MHz. Try a lower speed if SPI errors occur.
-  if (!sd.begin(SD_CS_PIN, SD_SCK_MHZ(50))) {
+  if (!sd.begin(SD_CS_PIN, SD_SCK_MHZ(25))) {
     sd.initErrorPrint(&Serial);
     fatalBlink();
   }

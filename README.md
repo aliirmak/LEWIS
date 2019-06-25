@@ -15,11 +15,11 @@ There is a informal map of what I want to achieve with this sensing system.
 The end goal is a solar-powered self-sustained GPS-synched sensors that have some IoT capability.
 
 ### Main challenges:
-- Library for sd card (sdfat-lib) needs to be modified for esp32
+- ~Library for sd card (sdfat-lib) needs to be modified for esp32~
 - How to program gps and how to get time information is unknown to me
-- PPS can be used to track accurate timing. How to use gps interrupt for pps needs to be researched.
+- PPS can be used to track accurate timing. How to use gps interrupt for pps needs to be researched. NeoGPS may be the answer.
 - Working with two cores (sensor reading+writing on core 1 and gps read and synch at core 0) is the major challenge. ESP32 documents can aid
-- ~Multiple i2c devices sharing the same address.~ MPU6050 can be assigned to 0x69 via AD0 while auxilary RTC has 0x68 reserved. 
+- ~Multiple i2c devices sharing the same address.~ 
 
 ### Further plans:
 - GPS is a battery eater. For now, this will be a 'wired' prototype but a wireless sensor by heart. 
@@ -31,3 +31,9 @@ Sensors talking to each other and almost synchronized start at the same time is 
 - Android/iOS integration for remote amangement of sensors
 - Better power management / deep sleep for esp32. Along the way, we need to get rid of usb-to-serial programmer which is there eating battery.
 This almost always warrants for a new circuitry design
+
+### Problems and Fixes during Coding:
+- SS is 33 for Adalogger when used with ESP32 Huzzah. Also SPI Mhz is preferred to be 25 instead of 50. 
+This probably slows down IO to some degree but SPI recognizes SD card more reliably.
+- MPU6050 can be assigned to 0x69 by connecting AD0 of the breakout board to 3.3V pin, while auxilary RTC has 0x68 reserved. 
+This needs to be also addressed in the UserFunctions.cpp.

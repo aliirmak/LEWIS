@@ -4,7 +4,7 @@
 #include "I2Cdev.h"
 #include "MPU6050.h"
 //------------------------------------------------------------------------------
-MPU6050 mpu;
+MPU6050 mpu(MPU6050_ADDRESS_AD0_HIGH);
 static uint32_t startMicros;
 // Acquire a data record.
 void acquireData(data_t* data) {
